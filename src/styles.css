@@ -1,0 +1,86 @@
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --font-sans: "Manrope", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Bricolage Grotesque", "Manrope", ui-sans-serif, sans-serif;
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-success: var(--success);
+  --color-success-foreground: var(--success-foreground);
+  --color-studio: var(--studio);
+  --color-studio-muted: var(--studio-muted);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --shadow-glow: var(--shadow-glow-value);
+  --shadow-card: var(--shadow-card-value);
+}
+
+/* Warm-charcoal night theme with an ember accent — "Confidence in Motion". */
+:root {
+  --radius: 0.75rem;
+  --background: oklch(0.17 0.012 50);
+  --foreground: oklch(0.96 0.01 80);
+  --card: oklch(0.22 0.014 50);
+  --card-foreground: oklch(0.96 0.01 80);
+  --popover: oklch(0.22 0.014 50);
+  --popover-foreground: oklch(0.96 0.01 80);
+  --primary: oklch(0.72 0.17 48);
+  --primary-foreground: oklch(0.17 0.02 40);
+  --secondary: oklch(0.28 0.02 50);
+  --secondary-foreground: oklch(0.96 0.01 80);
+  --muted: oklch(0.27 0.012 50);
+  --muted-foreground: oklch(0.7 0.02 70);
+  --accent: oklch(0.85 0.12 90);
+  --accent-foreground: oklch(0.2 0.02 60);
+  --destructive: oklch(0.65 0.21 25);
+  --destructive-foreground: oklch(0.98 0 0);
+  --success: oklch(0.72 0.15 155);
+  --success-foreground: oklch(0.15 0.03 155);
+  --studio: oklch(1 0 0);
+  --studio-muted: oklch(0.6 0.01 60);
+  --border: oklch(0.32 0.014 50);
+  --input: oklch(0.34 0.014 50);
+  --ring: oklch(0.72 0.17 48);
+  --shadow-glow-value: 0 12px 32px -8px color-mix(in oklab, var(--primary) 55%, transparent);
+  --shadow-card-value: 0 6px 20px -12px oklch(0 0 0 / 60%);
+  --gradient-hero: radial-gradient(120% 70% at 50% 0%, color-mix(in oklab, var(--primary) 22%, transparent), transparent 60%);
+}
+
+@utility bg-hero {
+  background-image: var(--gradient-hero);
+}
+
+@layer base {
+  * { border-color: var(--color-border); }
+  html { color-scheme: dark; }
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+    -webkit-tap-highlight-color: transparent;
+  }
+}
