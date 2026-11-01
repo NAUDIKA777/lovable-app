@@ -75,28 +75,8 @@ export const lookupBarcode = createServerFn({ method: "POST" })
   .inputValidator((d: { code: string }) => z.object({ code: z.string().regex(/^[0-9A-Za-z-]{4,32}$/) }).parse(d))
   .handler(async ({ data }): Promise<{ result: LookupResult | null; notice: string | null }> => {
     await requireUnlocked();
-    const key = process.env["BARCODE_API_KEY"];
-    if (!key) return { result: null, notice: "Barcode lookup isn't set up yet — barcode saved, fill details by hand." };
-    const provider = (process.env["BARCODE_PROVIDER"] ?? "go-upc").toLowerCase();
-    try {
-      if (provider === "barcodespider") {
-        const r = await fetch(`https://api.barcodespider.com/v1/lookup?upc=${encodeURIComponent(data.code)}`, { headers: { token: key } });
-        if (!r.ok) return { result: null, notice: "No match found — fill details by hand." };
-        const j = (await r.json()) as { item_attributes?: Record<string, string> };
-        const a = j.item_attributes;
-        if (!a?.["title"]) return { result: null, notice: "No match found — fill details by hand." };
-        return { result: { title: a["title"], description: a["description"], brand: a["brand"], category: a["category"], imageUrl: a["image"] }, notice: null };
-      }
-      const r = await fetch(`https://go-upc.com/api/v1/code/${encodeURIComponent(data.code)}`, { headers: { Authorization: `Bearer ${key}` } });
-      if (!r.ok) return { result: null, notice: "No match found — fill details by hand." };
-      const j = (await r.json()) as { product?: { name?: string; description?: string; brand?: string; category?: string; imageUrl?: string } };
-      const p = j.product;
-      if (!p?.name) return { result: null, notice: "No match found — fill details by hand." };
-      return { result: { title: p.name, description: p.description, brand: p.brand, category: p.category, imageUrl: p.imageUrl }, notice: null };
-    } catch (e) {
-      console.error("barcode lookup failed", e);
-      return { result: null, notice: "Lookup unavailable right now — barcode saved." };
-    }
+    const { lookupOnAmazon } = await import("./amazon-catalog.server");
+    return lookupOnAmazon(data.code);
   });
 
 /** Fetch a remote catalog photo server-side and return a data URL (avoids canvas CORS taint). */

@@ -15,3 +15,4 @@
 - Canvas/photo helpers (src/lib/image-tools.ts) and the barcode scanner are dynamically imported in the browser only. Why: they break server rendering.
 - Studio-photo cleanup streams through the server route /api/studio-photo, not a server function. Why: server functions can't stream images or accept multipart uploads.
 - Photos are stored as JPEG data URLs on the product row; no storage buckets. Why: keeps photos private with no public URLs.
+- Barcode lookup uses the Amazon SP-API Catalog Items API (title, brand, category, photo) via src/lib/amazon-catalog.server.ts, called from the PIN-gated `lookupBarcode` server function. Secrets: SPAPI_LWA_CLIENT_ID, SPAPI_LWA_CLIENT_SECRET, SPAPI_REFRESH_TOKEN (optional SPAPI_REGION, SPAPI_MARKETPLACE_ID, SPAPI_SANDBOX). Why: Amazon credentials must never reach the browser; failures degrade to a form notice, never an error page.
