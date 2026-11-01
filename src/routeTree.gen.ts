@@ -12,6 +12,8 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ApiStudioPhotoRouteImport } from './routes/api/studio-photo'
 import { Route as ListingIdRouteImport } from './routes/listing.$id'
+import { Route as ApiAppUnlockRouteImport } from './routes/api/app/unlock'
+import { Route as ApiAppBarcodeCodeRouteImport } from './routes/api/app/barcode/$code'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -28,35 +30,69 @@ const ListingIdRoute = ListingIdRouteImport.update({
   path: '/listing/$id',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiAppUnlockRoute = ApiAppUnlockRouteImport.update({
+  id: '/api/app/unlock',
+  path: '/api/app/unlock',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiAppBarcodeCodeRoute = ApiAppBarcodeCodeRouteImport.update({
+  id: '/api/app/barcode/$code',
+  path: '/api/app/barcode/$code',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/api/studio-photo': typeof ApiStudioPhotoRoute
   '/listing/$id': typeof ListingIdRoute
+  '/api/app/unlock': typeof ApiAppUnlockRoute
+  '/api/app/barcode/$code': typeof ApiAppBarcodeCodeRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/api/studio-photo': typeof ApiStudioPhotoRoute
   '/listing/$id': typeof ListingIdRoute
+  '/api/app/unlock': typeof ApiAppUnlockRoute
+  '/api/app/barcode/$code': typeof ApiAppBarcodeCodeRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/api/studio-photo': typeof ApiStudioPhotoRoute
   '/listing/$id': typeof ListingIdRoute
+  '/api/app/unlock': typeof ApiAppUnlockRoute
+  '/api/app/barcode/$code': typeof ApiAppBarcodeCodeRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/api/studio-photo' | '/listing/$id'
+  fullPaths:
+    | '/'
+    | '/api/studio-photo'
+    | '/listing/$id'
+    | '/api/app/unlock'
+    | '/api/app/barcode/$code'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/api/studio-photo' | '/listing/$id'
-  id: '__root__' | '/' | '/api/studio-photo' | '/listing/$id'
+  to:
+    | '/'
+    | '/api/studio-photo'
+    | '/listing/$id'
+    | '/api/app/unlock'
+    | '/api/app/barcode/$code'
+  id:
+    | '__root__'
+    | '/'
+    | '/api/studio-photo'
+    | '/listing/$id'
+    | '/api/app/unlock'
+    | '/api/app/barcode/$code'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   ApiStudioPhotoRoute: typeof ApiStudioPhotoRoute
   ListingIdRoute: typeof ListingIdRoute
+  ApiAppUnlockRoute: typeof ApiAppUnlockRoute
+  ApiAppBarcodeCodeRoute: typeof ApiAppBarcodeCodeRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -82,6 +118,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ListingIdRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/app/unlock': {
+      id: '/api/app/unlock'
+      path: '/api/app/unlock'
+      fullPath: '/api/app/unlock'
+      preLoaderRoute: typeof ApiAppUnlockRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/app/barcode/$code': {
+      id: '/api/app/barcode/$code'
+      path: '/api/app/barcode/$code'
+      fullPath: '/api/app/barcode/$code'
+      preLoaderRoute: typeof ApiAppBarcodeCodeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -89,6 +139,8 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ApiStudioPhotoRoute: ApiStudioPhotoRoute,
   ListingIdRoute: ListingIdRoute,
+  ApiAppUnlockRoute: ApiAppUnlockRoute,
+  ApiAppBarcodeCodeRoute: ApiAppBarcodeCodeRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
