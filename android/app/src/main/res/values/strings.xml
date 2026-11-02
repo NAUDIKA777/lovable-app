@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Strutworthy Scanner</string>
+    <string name="title_activity_main">Strutworthy Scanner</string>
+    <string name="package_name">com.strutworthy.scanner</string>
+    <string name="custom_url_scheme">com.strutworthy.scanner</string>
+</resources>
